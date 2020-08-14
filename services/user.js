@@ -1,4 +1,4 @@
-const { checkName:checkRegName} = require('../common/utils')
+const { checkName:checkRegName , checkPassword:checkRegPassword} = require('../common/utils')
 const model= require('../models/user')
 
 async function checkName(name){
@@ -23,6 +23,11 @@ async function checkName(name){
   return data
 }
 
+async function checkPassword(password){
+
+  return checkRegPassword(password)
+}
+
 /* 
  * 注册
  */
@@ -31,7 +36,25 @@ async function regist(name,password){
   await model.insertOne({ name, password} )
 }
 
+/* 
+ * 登录
+ */
+async function login(name,password){
+
+  let result = await model.findOne({name,password})
+
+  let data = { status : 'success'}
+  
+  if(!result){
+    data.status = 'falied'
+    data.message = '密码不对'
+  }
+
+  return data
+}
 module.exports = {
   checkName,
-  regist
+  checkPassword,
+  regist,
+  login
 }

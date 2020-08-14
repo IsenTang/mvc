@@ -3,9 +3,7 @@ const user = require('./users')
 
 module.exports =  (router)=>{
 
-
   student(router)
 
   user(router)
-
 }

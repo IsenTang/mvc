@@ -9,4 +9,6 @@ module.exports = function (router) {
 
   router.post('/user/regist',controller.regist)
 
+  router.post('/user/login',controller.login)
+
 }

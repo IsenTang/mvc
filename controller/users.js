@@ -1,6 +1,6 @@
 const services = require('../services/user')
 
-const { checkPassword } = require('../common/utils')
+const { checkName:checkRegName } = require('../common/utils')
 
 async function user(ctx,next){
 
@@ -28,7 +28,7 @@ async function regist(ctx,next){
   let result = await services.checkName(name)
 
   if(result.flag){
-    if(checkPassword(password)){
+    if(services.checkPassword(password)){
       await services.regist(name,password)
     }else{
 
@@ -44,9 +44,49 @@ async function regist(ctx,next){
 }
 
 
+async function login(ctx,next){
+
+  const { name,password } = ctx.request.body
+
+  let data = {}
+  // 检测用户名是否符合要求
+  let nameResult = checkRegName(name)
+
+  //检测姓名
+  if(nameResult){
+
+    // 检测密码
+    let passwordResult = await services.checkPassword(password)
+
+    if(passwordResult){
+
+      // 查看是否在平台注册过
+      let loginResult = await services.login(name,password)
+
+      if(loginResult.status === 'success'){
+
+        data.status = 'sucess'
+      }else{
+
+        data = loginResult
+      }
+    }else{
+      data.status = 'failed'
+      data.message = '密码不符合要求'
+    }
+  }else{
+    data.status = 'failed'
+    data.message = '用户名不符合要求'
+  }
+  
+  ctx.response.body = data
+}
+
+
 
 module.exports = {
   user,
   checkName,
-  regist
+  regist,
+  login
 }

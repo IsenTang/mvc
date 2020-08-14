@@ -2,6 +2,10 @@ let nameEle = document.getElementsByClassName('name')[0]
 let passwordEle = document.getElementsByClassName('password')[0]
 let btn = document.getElementsByClassName('regist-btn')[0]
 
+let loginNameEle = document.getElementsByClassName('login-name')[0]
+let loginPasswordEle = document.getElementsByClassName('login-password')[0]
+let loginBtn = document.getElementsByClassName('login-btn')[0]
+
 let nameEnable = false
 let passwordEnable = false
 
@@ -83,5 +87,29 @@ btn.onclick = function(){
       }
     }
   })
+}
+
+loginBtn.onclick = function(){
+
+  let loginName = loginNameEle.value
+  let loginPassword = loginPasswordEle.value
+  
+  // 如果input都不为空
+  if(loginName && loginPassword){
+
+    $.ajax({
+      type:'post',
+      url:'http://localhost:3000/user/login',
+      data:{
+        name:loginNameEle.value,
+        password:loginPasswordEle.value
+      },
+      success:(result)=>{
+  
+        console.log(result)
+      }
+    })
+  }
+  
 }
 
