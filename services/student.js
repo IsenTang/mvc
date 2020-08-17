@@ -1,4 +1,5 @@
-const { insertOne } = require('../models/student')
+const moment = require('moment')
+const { insertOne,find } = require('../models/student')
 
 /*
  * 增加学生
@@ -24,7 +25,23 @@ async function addStudent(data){
 }
 
 
+/* 
+ * 获取学生
+*/
+async function getStudent(data){
+
+  return await find(
+    { 
+      createdAt:{
+        $lte:moment().toDate(),
+        $gte:moment().subtract(1,'day').toDate()
+      }
+    })
+}
+
+
 module.exports = {
 
-  addStudent
+  addStudent,
+  getStudent
 }

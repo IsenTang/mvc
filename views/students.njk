@@ -40,10 +40,11 @@
         <div>
             <span>
                 {{ item.name }}
-                {% if item.gender === 1 %}
-                男
-                {% else %}
+
+                {% if item.gender === 0%}
                 女
+                {% else %}
+                男
                 {% endif %}
                 {{ item.age }}岁
 

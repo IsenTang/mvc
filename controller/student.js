@@ -5,7 +5,17 @@ const services = require('../services/student')
 */
 async function student(ctx,next){
 
-  await ctx.render('students')
+  const data = ctx.request.query
+
+  const students = await services.getStudent(data)
+
+  console.log(students)
+
+  ctx.state = {
+    students
+  }
+
+  await ctx.render('students',ctx.state)
 }
 
 /* 
@@ -17,6 +27,8 @@ async function addStudent(ctx,next){
 
   //添加学生
   let result = await services.addStudent(data)
+
+  result.students = await services.getStudent({})
 
   ctx.response.body = result
  
