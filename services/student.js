@@ -1,4 +1,5 @@
 const moment = require('moment')
+const _ = require('lodash')
 const { insertOne,find } = require('../models/student')
 
 /*
@@ -30,13 +31,15 @@ async function addStudent(data){
 */
 async function getStudent(data){
 
-  return await find(
-    { 
-      createdAt:{
-        $lte:moment().toDate(),
-        $gte:moment().subtract(1,'day').toDate()
-      }
-    })
+  let students = await find(data)
+
+  students = _.map(students,(item)=>{
+
+    item.gender = item.gender == '1' ? '男' : '女'
+    return item
+  })
+
+  return students
 }
 
 

@@ -7,4 +7,7 @@ module.exports = (router)=> {
   
   router.post('/student',controller.addStudent)
 
+
+  router.get('/student/getStudents',controller.getStudents)
+
 }

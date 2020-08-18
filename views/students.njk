@@ -33,12 +33,18 @@
 </div>
 
 
+<select class='student-select'>
+
+    <option value='1'>男</option>
+    <option value='0'>女</option>
+</select>
+
 <div class='student-list'>
 
     {% for item in students %}
 
         <div>
-            <span>
+            {# <span>
                 {{ item.name }}
 
                 {% if item.gender === 0%}
@@ -49,7 +55,15 @@
                 {{ item.age }}岁
 
                 学习{{ item.major }}
-            </span>
+            </span> #}
+
+            {{ item.name }}
+
+            {{ item.gender }}
+
+            {{ item.age }}岁
+
+            学习{{ item.major }}
         </div>
     {% endfor %}
 </div>

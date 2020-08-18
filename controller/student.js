@@ -9,8 +9,6 @@ async function student(ctx,next){
 
   const students = await services.getStudent(data)
 
-  console.log(students)
-
   ctx.state = {
     students
   }
@@ -26,7 +24,7 @@ async function addStudent(ctx,next){
   const data = ctx.request.body
 
   //添加学生
-  let result = await services.addStudent(data)
+  let result = await services.addStudent(data) // ==> { status: 'success'}
 
   result.students = await services.getStudent({})
 
@@ -34,8 +32,20 @@ async function addStudent(ctx,next){
  
 }
 
+async function getStudents(ctx,next){
+
+  const { gender } = ctx.request.query
+
+  const students = await services.getStudent({ gender })
+
+  ctx.response.body = {
+    students
+  }
+}
+
 
 module.exports = {
   student,
-  addStudent
+  addStudent,
+  getStudents
 }

@@ -15,7 +15,7 @@ async function insertOne(data){
  */
 async function find(query){
 
-  return studentsModel.find(query)
+  return studentsModel.find(query).lean()
 }
 
 module.exports = {

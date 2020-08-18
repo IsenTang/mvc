@@ -25,7 +25,6 @@ function getMajor(){
 }
 
 
-
 sendBtn.onclick = function (){
 
   $.ajax({
@@ -43,16 +42,15 @@ sendBtn.onclick = function (){
       // result ==> { status : success , students:[]}
       if(result.status === 'success'){
 
-
         $('.student-list').html('')
 
         let html = ''
 
         result.students.forEach((item)=>{
 
-          let gender = item.gender == 1 ? '男' : '女'
-          html+= `<div><span>${item.name} ${gender} ${item.age}岁 学习${item.major}</span></div>`
+          html+= `<div><span>${item.name} ${item.gender} ${item.age}岁 学习${item.major}</span></div>`
         })
+        console.log(html)
 
         $('.student-list').html(html)
         // alert('存入成功')
@@ -61,6 +59,42 @@ sendBtn.onclick = function (){
         alert(result.message)
       }
       
+    }
+  })
+}
+
+select.onchange = function (){
+
+  const index = select.selectedIndex
+
+  const gender = select.options[index]
+
+  const value = gender.value
+
+  $.ajax({
+    type:'get',
+    url:'http://localhost:3000/student/getStudents',
+    data:{
+      gender:value
+    },
+    success:(result)=>{
+
+      console.log(result)
+
+      $('.student-list').html('')
+
+      let html = ''
+
+      result.students.forEach((item)=>{
+
+        html += `<div>
+                  <span>${item.name} ${item.gender} ${item.age}岁 学习${item.major}</span>
+                </div>`
+      })
+
+      console.log(html)
+
+      $('.student-list').html(html)
     }
   })
 }
